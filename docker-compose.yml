@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15.1-alpine
+    container_name: pleroma_db
+    restart: always
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "pleroma" ]
+    environment:
+      POSTGRES_USER: pleroma
+      POSTGRES_PASSWORD: ChangeMe!
+      POSTGRES_DB: pleroma
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
+
+  web:
+    image: pleroma:latest
+    container_name: pleroma_web
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "wget -q --spider --proxy=off localhost:4000 || exit 1"
+        ]
+    restart: always
+    ports:
+      - '4000:4000'
+    volumes:
+      - ./uploads:/var/lib/pleroma/uploads
+      - ./static:/var/lib/pleroma/static
+    environment:
+      DOMAIN: example.com
+      INSTANCE_NAME: Pleroma
+      ADMIN_EMAIL: admin@example.com
+      NOTIFY_EMAIL: notify@example.com
+      DB_USER: pleroma
+      DB_PASS: ChangeMe!
+      DB_NAME: pleroma
+    depends_on:
+      - db
