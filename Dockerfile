@@ -1,6 +1,5 @@
 FROM elixir:1.14.1-alpine as build
 
-ARG PLEROMA_VER=develop
 ENV MIX_ENV=prod
 
 RUN echo "http://nl.alpinelinux.org/alpine/latest-stable/community" >> /etc/apk/repositories \
@@ -9,8 +8,7 @@ RUN echo "http://nl.alpinelinux.org/alpine/latest-stable/community" >> /etc/apk/
 
 WORKDIR /pleroma
 
-RUN git clone -b develop https://git.pleroma.social/pleroma/pleroma.git /pleroma \
-    && git checkout ${PLEROMA_VER}
+COPY ../pleroma /pleroma
 
 RUN echo "import Mix.Config" > config/prod.secret.exs \
     && mix local.hex --force \
@@ -34,7 +32,8 @@ LABEL maintainer="ops@pleroma.social" \
     org.opencontainers.image.licenses="AGPL-3.0" \
     org.opencontainers.image.url="https://pleroma.social" \
     org.opencontainers.image.revision=$VCS_REF \
-    org.opencontainers.image.created=$BUILD_DATE
+    org.opencontainers.image.created=$BUILD_DATE \
+    org.opencontainers.image.source=https://github.com/mirror-kt/docker-pleroma
 
 ARG HOME=/opt/pleroma
 ARG DATA=/var/lib/pleroma
