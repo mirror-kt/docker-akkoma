@@ -7,8 +7,8 @@ HOME="/opt/pleroma"
 DATA="/var/lib/pleroma"
 
 echo "Starting with UID : $USER_ID, GID: $GROUP_ID"
-useradd -u "$USER_ID" -d ${HOME} -o -m pleroma
-groupmod -g "$GROUP_ID" pleroma
+groupadd -g "$GROUP_ID" pleroma
+useradd -u "$USER_ID" -d ${HOME} -o -m -g pleroma pleroma
 
 export HOME=/opt/pleroma
 
