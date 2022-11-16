@@ -9,6 +9,7 @@ on:
     paths:
       - ".github/workflows/docker.yml"
       - "Dockerfile"
+      - "entrypoint-wrapper.sh"
 
 jobs:
   docker:
