@@ -37,7 +37,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
-          context: pleroma
+          context: main
           push: true
           build-args: |
             BUILD_DATE=${{ env.CURRENT_DATE }}
