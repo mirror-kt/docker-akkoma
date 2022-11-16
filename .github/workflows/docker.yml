@@ -40,8 +40,8 @@ jobs:
           context: pleroma
           push: true
           build-args: |
-            BUILD_DATE: ${{ env.CURRENT_DATE }}
-            VCS_REF: ${{ env.LAST_COMMIT }}
+            BUILD_DATE=${{ env.CURRENT_DATE }}
+            VCS_REF=${{ env.LAST_COMMIT }}
           tags: |
             ghcr.io/mirror-kt/pleroma:latest
             ghcr.io/mirror-kt/pleroma:${{ env.LAST_COMMIT }}
