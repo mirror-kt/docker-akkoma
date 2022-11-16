@@ -44,7 +44,7 @@ RUN apk update &&\
     mkdir -p ${DATA}/static &&\
     mkdir -p /etc/pleroma
 
-COPY --from=build --chown=pleroma:0 /pleroma/release ${HOME}
+COPY --from=build /pleroma/release ${HOME}
 
 COPY --from=build /pleroma/config/docker.exs /etc/pleroma/config.exs
 COPY --from=build /pleroma/docker-entrypoint.sh ${HOME}

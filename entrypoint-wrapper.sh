@@ -7,13 +7,12 @@ HOME="/opt/pleroma"
 DATA="/var/lib/pleroma"
 
 echo "Starting with UID : $USER_ID, GID: $GROUP_ID"
-useradd -u "$USER_ID" -d ${HOME} -o -m pleroma
-groupmod -g "$GROUP_ID" pleroma
+groupadd -g "$GROUP_ID" pleroma
+useradd -u "$USER_ID" -d ${HOME} -o -m -g pleroma pleroma
 
 export HOME=/opt/pleroma
 
-mkdir -p "$DATA/static" "$DATA/uploads"
-chown -R pleroma:pleroma "$HOME"
-chown -R pleroma:pleroma "$DATA"
+chown -R pleroma "$HOME"
+chown -R pleroma "$DATA"
 
 exec su-exec pleroma "$HOME/docker-entrypoint.sh"
