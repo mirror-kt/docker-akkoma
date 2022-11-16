@@ -12,6 +12,7 @@ groupmod -g "$GROUP_ID" pleroma
 
 export HOME=/opt/pleroma
 
+mkdir -p "$DATA/static" "$DATA/uploads"
 chown -R pleroma:pleroma "$HOME"
 chown -R pleroma:pleroma "$DATA"
 
