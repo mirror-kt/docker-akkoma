@@ -3,16 +3,16 @@
 USER_ID=${LOCAL_UID:-9001}
 GROUP_ID=${LOCAL_GID:-9001}
 
-HOME="/opt/pleroma"
-DATA="/var/lib/pleroma"
+HOME="/opt/akkoma"
+DATA="/var/lib/akkoma"
 
 echo "Starting with UID : $USER_ID, GID: $GROUP_ID"
-groupadd -g "$GROUP_ID" pleroma
-useradd -u "$USER_ID" -d ${HOME} -o -m -g pleroma pleroma
+groupadd -g "$GROUP_ID" akkoma
+useradd -u "$USER_ID" -d ${HOME} -o -m -g akkoma akkoma
 
-export HOME=/opt/pleroma
+export HOME=/opt/akkoma
 
-chown -R pleroma:pleroma "$HOME"
-chown -R pleroma:pleroma "$DATA"
+chown -R akkoma:akkoma "$HOME"
+chown -R akkoma:akkoma "$DATA"
 
-exec su-exec pleroma "$HOME/docker-entrypoint.sh"
+exec su-exec akkoma "$HOME/docker-entrypoint.sh"
