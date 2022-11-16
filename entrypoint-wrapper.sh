@@ -12,7 +12,7 @@ useradd -u "$USER_ID" -d ${HOME} -o -m -g pleroma pleroma
 
 export HOME=/opt/pleroma
 
-chown -R pleroma "$HOME"
-chown -R pleroma "$DATA"
+chown -R pleroma:pleroma "$HOME"
+chown -R pleroma:pleroma "$DATA"
 
 exec su-exec pleroma "$HOME/docker-entrypoint.sh"

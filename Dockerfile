@@ -8,7 +8,7 @@ RUN echo "http://nl.alpinelinux.org/alpine/latest-stable/community" >> /etc/apk/
 
 WORKDIR /pleroma
 
-COPY ../pleroma /pleroma
+COPY ./pleroma /pleroma
 
 RUN echo "import Mix.Config" > config/prod.secret.exs \
     && mix local.hex --force \

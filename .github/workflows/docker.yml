@@ -17,8 +17,6 @@ jobs:
     steps:
       - name: Checkout this repository
         uses: actions/checkout@v3
-        with:
-          path: main
       - name: Checkout pleroma repository
         run: git clone -b develop --depth 1 https://git.pleroma.social/pleroma/pleroma pleroma
       - name: Set up Docker Buildx
@@ -37,7 +35,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
-          context: main
+          context: .
           push: true
           build-args: |
             BUILD_DATE=${{ env.CURRENT_DATE }}
