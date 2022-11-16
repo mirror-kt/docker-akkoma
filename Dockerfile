@@ -46,7 +46,7 @@ RUN apk update &&\
 COPY --from=build /akkoma/release ${HOME}
 
 COPY --from=build /akkoma/config/docker.exs /etc/akkoma/config.exs
-COPY --from=build /akkoma/docker-entrypoint.sh ${HOME}
+COPY ./docker-entrypoint.sh ${HOME}
 
 COPY ./entrypoint-wrapper.sh ${HOME}
 
