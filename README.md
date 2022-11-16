@@ -1,1 +1,1 @@
-# Pleroma docker image
+# Akkoma docker image

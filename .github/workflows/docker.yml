@@ -15,8 +15,8 @@ jobs:
     steps:
       - name: Checkout this repository
         uses: actions/checkout@v3
-      - name: Checkout pleroma repository
-        run: git clone -b develop --depth 1 https://git.pleroma.social/pleroma/pleroma pleroma
+      - name: Checkout akkoma repository
+        run: git clone -b develop --depth 1 https://akkoma.dev/AkkomaGang/akkoma.git akkoma
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
       - name: Login to ghcr.io
@@ -29,7 +29,7 @@ jobs:
         run: echo "CURRENT_DATE=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
       - name: Get latest git commit
         run: echo "LAST_COMMIT=$(git log -1 --pretty=%h)" >> $GITHUB_ENV
-        working-directory: pleroma
+        working-directory: akkoma
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
@@ -39,7 +39,7 @@ jobs:
             BUILD_DATE=${{ env.CURRENT_DATE }}
             VCS_REF=${{ env.LAST_COMMIT }}
           tags: |
-            ghcr.io/mirror-kt/pleroma:latest
-            ghcr.io/mirror-kt/pleroma:${{ env.LAST_COMMIT }}
+            ghcr.io/mirror-kt/akkoma:latest
+            ghcr.io/mirror-kt/akkoma:${{ env.LAST_COMMIT }}
           cache-from: type=gha
           cache-to: type=gha,mode=max

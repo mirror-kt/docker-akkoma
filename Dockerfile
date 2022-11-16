@@ -6,9 +6,9 @@ RUN echo "http://nl.alpinelinux.org/alpine/latest-stable/community" >> /etc/apk/
     && apk update \
     && apk add git gcc g++ musl-dev make cmake file-dev
 
-WORKDIR /pleroma
+WORKDIR /akkoma
 
-COPY ./pleroma /pleroma
+COPY ./akkoma /akkoma
 
 RUN echo "import Mix.Config" > config/prod.secret.exs \
     && mix local.hex --force \
@@ -23,35 +23,34 @@ FROM alpine:3.16.3
 ARG BUILD_DATE
 ARG VCS_REF
 
-LABEL maintainer="ops@pleroma.social" \
-    org.opencontainers.image.title="pleroma" \
-    org.opencontainers.image.description="Pleroma for Docker" \
-    org.opencontainers.image.authors="ops@pleroma.social" \
-    org.opencontainers.image.vendor="pleroma.social" \
-    org.opencontainers.image.documentation="https://git.pleroma.social/pleroma/pleroma" \
+LABEL maintainer="ops@akkoma.social" \
+    org.opencontainers.image.title="akkoma" \
+    org.opencontainers.image.description="Akkoma for Docker" \
+    org.opencontainers.image.vendor="akkoma.dev" \
+    org.opencontainers.image.documentation="https://docs.akkoma.dev/stable/" \
     org.opencontainers.image.licenses="AGPL-3.0" \
-    org.opencontainers.image.url="https://pleroma.social" \
+    org.opencontainers.image.url="https://akkoma.dev" \
     org.opencontainers.image.revision=$VCS_REF \
     org.opencontainers.image.created=$BUILD_DATE \
-    org.opencontainers.image.source=https://github.com/mirror-kt/docker-pleroma
+    org.opencontainers.image.source=https://github.com/mirror-kt/docker-akkoma
 
-ARG HOME=/opt/pleroma
-ARG DATA=/var/lib/pleroma
+ARG HOME=/opt/akkoma
+ARG DATA=/var/lib/akkoma
 
 RUN apk update &&\
     apk add exiftool ffmpeg imagemagick libmagic ncurses postgresql-client su-exec shadow &&\
     mkdir -p ${DATA}/uploads &&\
     mkdir -p ${DATA}/static &&\
-    mkdir -p /etc/pleroma
+    mkdir -p /etc/akkoma
 
-COPY --from=build /pleroma/release ${HOME}
+COPY --from=build /akkoma/release ${HOME}
 
-COPY --from=build /pleroma/config/docker.exs /etc/pleroma/config.exs
-COPY --from=build /pleroma/docker-entrypoint.sh ${HOME}
+COPY --from=build /akkoma/config/docker.exs /etc/akkoma/config.exs
+COPY --from=build /akkoma/docker-entrypoint.sh ${HOME}
 
 COPY ./entrypoint-wrapper.sh ${HOME}
 
 EXPOSE 4000
 
-ENTRYPOINT ["/opt/pleroma/entrypoint-wrapper.sh"]
+ENTRYPOINT ["/opt/akkoma/entrypoint-wrapper.sh"]
 
